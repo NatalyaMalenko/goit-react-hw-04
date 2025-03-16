@@ -34,7 +34,7 @@
 .modalImage {
   background-color: white;
   max-width: 100%;
-  max-height: 80vh;
+  max-height: 60vh;
   display: flex;
   justify-content: center;
   align-items: center;
@@ -53,10 +53,11 @@
   top: 10px;
   right: 10px;
   background-color: #fff;
+  color: #7b0764;
   border: none;
   padding: 4px;
   cursor: pointer;
-  font-size: 30px;
+  font-size: 26px;
   width: 40px;
   height: 40px;
   border-radius: 50%;

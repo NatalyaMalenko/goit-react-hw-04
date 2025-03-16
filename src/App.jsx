@@ -1,7 +1,5 @@
 import { useState, useEffect } from "react";
 
-import Modal from "react-modal";
-Modal.setAppElement("#root");
 import "./App.css";
 import { SearchBar } from "./components/SearchBar/SearchBar";
 import toast, { Toaster } from "react-hot-toast";
@@ -18,17 +16,14 @@ function App() {
   const [isLoading, setIsLoading] = useState(false);
   const [error, setError] = useState(false);
   const [page, setPage] = useState(1);
-  const [modalIsOpen, setModalIsOpen] = useState(false);
+
   const [selectPhoto, setSelectPhoto] = useState(null);
 
   function openModal(photo) {
-    if (modalIsOpen) return;
     setSelectPhoto(photo);
-    setModalIsOpen(true);
   }
 
   function closeModal() {
-    setModalIsOpen(false);
     setSelectPhoto(null);
   }
   const handleSubmit = (term) => {
@@ -76,13 +71,8 @@ function App() {
           Load more {page}
         </LoadMoreBtn>
       )}
-      {modalIsOpen && selectPhoto && (
-        <ImageModal
-          isOpen={modalIsOpen}
-          onClose={closeModal}
-          photo={selectPhoto}
-        />
-      )}
+
+      <ImageModal onClose={closeModal} photo={selectPhoto} />
     </div>
   );
 }
