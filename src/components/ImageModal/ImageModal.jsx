@@ -4,8 +4,6 @@ Modal.setAppElement("#root");
 import css from "./ImageModal.module.css";
 
 export default function ImageModal({ onClose, photo }) {
-  if (!photo) return;
-
   const isOpen = Boolean(photo);
   return (
     <Modal
@@ -14,17 +12,21 @@ export default function ImageModal({ onClose, photo }) {
       isOpen={isOpen}
       onRequestClose={onClose}
     >
-      <button className={css.modalCloseButton} onClick={onClose}>
-        X
-      </button>
-      <img
-        className={css.modalImage}
-        src={photo.urls.regular}
-        alt={photo.description}
-      />
-      <p className={css.text}>Likes: {photo.likes}</p>
-      <p className={css.text}>Description: {photo.description}</p>
-      <p className={css.text}>Author: {photo.user.name}</p>
+      {photo && (
+        <>
+          <button className={css.modalCloseButton} onClick={onClose}>
+            X
+          </button>
+          <img
+            className={css.modalImage}
+            src={photo.urls.regular}
+            alt={photo.description}
+          />
+          <p className={css.text}>Likes: {photo.likes}</p>
+          <p className={css.text}>Description: {photo.description}</p>
+          <p className={css.text}>Author: {photo.user.name}</p>
+        </>
+      )}
     </Modal>
   );
 }
