@@ -7,7 +7,8 @@ import fetchPhoto from "./fetchPhoto";
 import ImageGallery from "./components/ImageGallery/ImageGallery";
 import Spinner from "./components/Loader/Loader";
 import LoadMoreBtn from "./components/LoadMoreBtn/LoadMoreBtn";
-import ImageCardGallery from "./components/ImageCard/ImageCard";
+import ErrorMessage from "./components/ErrorMessage/ErrorMessage";
+
 import ImageModal from "./components/ImageModal/ImageModal";
 
 function App() {
@@ -46,10 +47,15 @@ function App() {
         setIsLoading(true);
         setError(false);
         const images = await fetchPhoto(searchTerm, page);
+        if (images.length === 0) {
+          toast.error("No images found!");
+          return;
+        }
         setPhotos((prevImages) => {
           return page === 1 ? images : [...prevImages, ...images];
         });
       } catch {
+        setError(true);
         toast.error("Error! Please, reload page!");
       } finally {
         setIsLoading(false);
@@ -63,8 +69,8 @@ function App() {
     <div>
       <Toaster />
       <SearchBar onSubmit={handleSubmit} />
-      <ImageGallery photos={photos} />
-      <ImageCardGallery photos={photos} onClick={openModal} />
+      {error && <ErrorMessage error={error} />}
+      <ImageGallery photos={photos} onImageClick={openModal} />
       {isLoading && <Spinner />}
       {photos.length > 0 && !isLoading && (
         <LoadMoreBtn onClick={() => setPage(page + 1)}>
